@@ -17,12 +17,13 @@ Por Hacer:
   - Ajustar Vehiculos ^
   - Bajar spawn de los Pilotos (avión) y moverlo un poco para atrás
   - Colocar objetos faltantes (ej. rampas, tiendas, armeria costa, armeria centro, muelle)
-  - Colocar tiendas faltantes (Armerías, Comidas R)
+  - Colocar tiendas faltantes (Armerías, Comidas R) http://i.imgur.com/JF8Wtxt.png
   - Menu de tiendas simplificado (filterscript)
   - Menu de usuario con: Género para skin.
   - Comandos: Admin[/on, /off, /kick, /carcel, /anuncio, /ban, /lock], Player[/]
   - Sistema donadores
   - Spawnear vehículos pesados; los escondidos y los de Area 52
   - Stats (MYSQL)
+  - Bounties (Comandos /hitman y /bounties)
   - Yellow colored admin text in Chat
   - No permitir usar armas/disparar desde vehiculos sin conductor
