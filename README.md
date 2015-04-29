@@ -25,3 +25,4 @@ Por Hacer:
   - Spawnear vehículos pesados; los escondidos y los de Area 52
   - Stats (MYSQL)
   - Yellow colored admin text in Chat
+  - No permitir usar armas/disparar desde vehiculos sin conductor
