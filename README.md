@@ -1,4 +1,4 @@
-San Fierro: TDM por Frondor
+﻿San Fierro: TDM por Frondor
 ========
 
 {Descripción}
@@ -24,3 +24,4 @@ Por Hacer:
   - Sistema donadores
   - Spawnear vehículos pesados; los escondidos y los de Area 52
   - Stats (MYSQL)
+  - Yellow colored admin text in Chat
