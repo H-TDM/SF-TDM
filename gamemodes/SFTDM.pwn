@@ -1,6 +1,6 @@
-// This is a commenta
-// uncomment the line below if you want to write a filterscript
-//#define FILTERSCRIPT
+// #v0.0.1#
+// San Fierro: Team Deathmatch GameMode
+// by Frondor
 
 #include <a_samp>
 
@@ -43,6 +43,7 @@ static gTeam[MAX_PLAYERS];
 #define TEAM_CHICKEN 12
 #define TEAM_ARMY 13
 
+//Gamemode Text
 #define gmTXT "San Fierro: TDM v0.0.1"
 
 //MAX PICKUPS PER WEAPON... 6 is ok
