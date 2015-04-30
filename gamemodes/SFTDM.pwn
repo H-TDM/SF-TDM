@@ -1,13 +1,15 @@
-// #v0.0.1#
+// #v0.0.2#
 // San Fierro: Team Deathmatch GameMode
 // by Frondor
-
 #include <a_samp>
+#include <sscanf2>
+#include <zcmd>
+//#include <streamer> añadir plugin en server.cfg tambien
 
 static gTeam[MAX_PLAYERS];
 
 //Color Defines
-#define COLOR_GREY 0x70707096
+//#define COLOR_GREY 0x70707096 usado por zcmd include
 #define COLOR_DARKGREY 0x545454FF
 #define COLOR_GREEN 0x00620096
 #define COLOR_RED 0xAA3333AA
@@ -44,7 +46,7 @@ static gTeam[MAX_PLAYERS];
 #define TEAM_ARMY 13
 
 //Gamemode Text
-#define gmTXT "San Fierro: TDM v0.0.1"
+#define gmTXT "San Fierro: TDM v0.0.2"
 
 //MAX PICKUPS PER WEAPON... 6 is ok
 new DropLimit = 6;
@@ -293,22 +295,22 @@ public OnGameModeInit()
 	AddPlayerClass(274,-2665.4282,635.6348,14.4531,179.8403,33,30,29,150,23,30); //Medic
     AddPlayerClass(285,-1635.0077,665.8105,7.1875,264.2244,29,150,31,150,16,8); //Swat
 	AddPlayerClass(162,-530.9717,-98.2034,63.2969,4.3698,26,100,28,150,24,20); //Hick
-	AddPlayerClass(255,-1331.1147,-235.3819,858.4656,106.3832,34,18,23,30,18,8); //Pilot
+	AddPlayerClass(255,-1331.1147,-235.3819,458.4656,106.3832,34,18,23,30,18,8); //Pilot
     AddPlayerClass(187,-2664.8774,940.8234,79.7101,184.9922,31,150,27,100,16,8); //Toreno
     AddPlayerClass(122,-1478.7167,1489.1571,8.2501,272.8738,27,100,28,150,24,50); // nang
     AddPlayerClass(167,-2671.8293,267.5992,4.3359,358.9251,26,100,29,150,24,20); // chicken
     AddPlayerClass(287,-1335.4381,506.1993,11.1953,83.7755,31,150,24,20,27,100); // army
 
-	CreateVehicle(471,-1331.0846,-232.7304,858.1304,106.1061,0,7,120); // quad1
-	CreateVehicle(471,-1333.1228,-233.3187,857.6396,106.1063,0,7,120); // quad2
-	CreateVehicle(471,-1334.9735,-233.8529,857.1973,106.0828,0,7,120); // qaud3
-	CreateVehicle(471,-1336.8336,-234.3891,856.7507,106.0772,0,7,120); // qaud4
-	CreateVehicle(471,-1338.6772,-234.9201,856.3088,106.0686,0,7,120); // qaud5
-	CreateVehicle(471,-1329.3984,-238.3599,858.1602,104.6697,0,7,120); // quad6
-	CreateVehicle(471,-1331.0671,-238.7967,857.7630,104.6650,0,7,120); // quad7
-	CreateVehicle(471,-1332.7803,-239.2450,857.3539,104.6976,0,7,120); // quad8
-	CreateVehicle(471,-1334.5336,-239.7271,856.9307,106.4921,0,7,120); // quad9
-	CreateVehicle(471,-1336.1462,-240.2041,856.5461,106.4772,0,7,120); // quad10
+	CreateVehicle(471,-1331.0846,-232.7304,458.1304,106.1061,0,7,120); // quad1
+	CreateVehicle(471,-1333.1228,-233.3187,457.6396,106.1063,0,7,120); // quad2
+	CreateVehicle(471,-1334.9735,-233.8529,457.1973,106.0828,0,7,120); // qaud3
+	CreateVehicle(471,-1336.8336,-234.3891,456.7507,106.0772,0,7,120); // qaud4
+	CreateVehicle(471,-1338.6772,-234.9201,456.3088,106.0686,0,7,120); // qaud5
+	CreateVehicle(471,-1329.3984,-238.3599,458.1602,104.6697,0,7,120); // quad6
+	CreateVehicle(471,-1331.0671,-238.7967,457.7630,104.6650,0,7,120); // quad7
+	CreateVehicle(471,-1332.7803,-239.2450,457.3539,104.6976,0,7,120); // quad8
+	CreateVehicle(471,-1334.5336,-239.7271,456.9307,106.4921,0,7,120); // quad9
+	CreateVehicle(471,-1336.1462,-240.2041,456.5461,106.4772,0,7,120); // quad10
 	CreateVehicle(519,-1289.7424,-350.5048,15.1024,195.3063,0,7,120); // shamal1
 	CreateVehicle(519,-1311.3673,-355.8325,15.0744,194.4418,0,7,120); // shamal2
 	CreateVehicle(476,-1266.8002,-341.9807,14.8562,202.8707,0,7,120); // rustler1
@@ -510,6 +512,7 @@ public OnGameModeInit()
     CreateVehicle(407,-2053.5063,75.4488,28.6258,91.9088,3,1,120); // firetruck fdsa
     CreateVehicle(559,-1707.7039,1348.4867,6.8361,135.6851,60,1,120); // jester
     CreateVehicle(559,-1817.1080,1293.3694,59.3907,5.6484,60,1,120); // Jester
+	CreateVehicle(469,-1636.4680,1417.2191,7.2169,135.0043,0,7,120); // Nang Sparrow
 
 	/*Clock = TextDrawCreate(547.0, 24.0, "12:00");
 	TextDrawSetShadow(Clock, 0);
@@ -822,8 +825,8 @@ public OnGameModeInit()
 	TextDrawSetShadow(army1,1);
 
 	//--objects
-	CreateObject(14548,-1355.7847900391, -242.65003967285, 853.583984375, 0.000000, 0.000000, 18105.466326);
-
+	//CreateObject(14548,-1355.7847900391, -242.65003967285, 853.583984375, 0.000000, 0.000000, 18105.466326);
+    CreateObject(14548,-1355.7847900391, -242.65003967285, 453.583984375, 0.000000, 0.000000, 18105.466326); //cargo plane pilots
 //spawninfo text
 
 
@@ -1148,42 +1151,6 @@ public OnPlayerText(playerid, text[])
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-	if (strcmp("/mycommand", cmdtext, true, 10) == 0)
-	{
-		// Do something here
-		return 1;
-	}
-	else if (strcmp("/sos", cmdtext, true, 10) == 0)
-	{
-		SendClientMessage(playerid, COLOR_RED, "Estas siendo destrabado.");
-		return 1;
-	}
-	else if (strcmp("/clase", cmdtext, true, 10) == 0)
-	{
-		SendClientMessage(playerid, COLOR_RED, "Cambiando de clase");
-	    ForceClassSelection(playerid);
-	    TogglePlayerSpectating(playerid, true);
-	    TogglePlayerSpectating(playerid, false);
-	    return 1;
-	}
-	else if (strcmp("/morir", cmdtext, true, 10) == 0)
-	{
-        SetPlayerHealth(playerid, 0);
-	    return 1;
-	}
-	else if (strcmp("/nos", cmdtext, true, 10) == 0)
-	{
-		new playerState = GetPlayerState(playerid);
-        if(playerState == PLAYER_STATE_DRIVER) {
-        	new vehicleid = GetPlayerVehicleID(playerid);
-        	AddVehicleComponent(vehicleid, 1010); // Add NOS to the vehicle
-			SendClientMessage(playerid, COLOR_YELLOW, "Más rápido y más furioso!");
-		}
-		else {
-			SendClientMessage(playerid, COLOR_RED, "Necesitas estar en un vehículo para aplicar nitro.");
-		}
-	    return 1;
-	}
 	return 0;
 }
 
@@ -1375,4 +1342,30 @@ GetWeaponModel(weaponid)
 		case 41: return 365; case 42: return 366; case 46: return 371;
 	}
 	return -1;
+}
+//======================================
+//============ COMANDOS ================
+//======================================
+CMD:clase(playerid) {
+	SendClientMessage(playerid, COLOR_RED, "Cambiando de clase");
+ 	ForceClassSelection(playerid);
+ 	TogglePlayerSpectating(playerid, true);
+ 	TogglePlayerSpectating(playerid, false);
+ 	return 1;
+}
+CMD:morir(playerid) {
+	SetPlayerHealth(playerid, 0);
+	return 1;
+}
+CMD:nos(playerid) {
+	new playerState = GetPlayerState(playerid);
+    if(playerState == PLAYER_STATE_DRIVER) {
+    	new vehicleid = GetPlayerVehicleID(playerid);
+    	AddVehicleComponent(vehicleid, 1010); // Add NOS to the vehicle
+		SendClientMessage(playerid, COLOR_YELLOW, "Más rápido y más furioso!");
+	}
+	else {
+		SendClientMessage(playerid, COLOR_RED, "Necesitas estar en un vehículo para aplicar nitro.");
+	}
+    return 1;
 }
